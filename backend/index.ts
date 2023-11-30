@@ -12,6 +12,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// Temp Data
 const apartments: ApartmentType[] = [
   {
     id: 1,
@@ -33,23 +34,34 @@ const apartments: ApartmentType[] = [
   },
 ];
 
-// list
+/**
+ * Api for listting all of the Apartments
+ * expects no thing
+ * returns array of Apartments
+ */
 app.get("/api/apartments", (req: Request, res: Response) => {
   res.json(apartments);
 });
 
-// details
+/**
+ * Api for getting the Details for an Apartment
+ * expects id as request param
+ * returns apartment details object
+ */
 app.get(
   "/api/apartment/:id",
   (req: TypedRequestParams<GetApartmentPayloadType>, res: Response) => {
     const apartmentId = Number(req.params.id);
-    console.log("id", apartmentId);
     const apartmentDetails = apartments.filter(({ id }) => id === apartmentId);
     res.json(apartmentDetails[0]);
   }
 );
 
-// add
+/**
+ * Api for Adding an Apartment
+ * expects title, price, img and areaSize as a mandatory payload
+ * returns message in both success and error cases
+ */
 app.post("/api/apartment", (req: IAddApartmentPayloadType, res: Response) => {
   const newApartment = req.body;
   if (
