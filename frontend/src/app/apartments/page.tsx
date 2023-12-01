@@ -3,7 +3,7 @@ import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
-async function getData(id: number): Promise<ApartmentType[]> {
+async function getData(): Promise<ApartmentType[]> {
   const res = await fetch("http://localhost:4000/api/apartments", {
     cache: "no-cache",
   });
@@ -15,12 +15,8 @@ async function getData(id: number): Promise<ApartmentType[]> {
   return res.json();
 }
 
-export default async function Page({
-  params: { id },
-}: {
-  params: { id: number };
-}) {
-  const apartments = await getData(id);
+export default async function Page() {
+  const apartments = await getData();
   console.log("apartments", apartments);
 
   return (
